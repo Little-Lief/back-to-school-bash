@@ -1,0 +1,260 @@
+<!-- ABOUT SECTION -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about__intro">
+      <p class="section-label">Our Mission</p>
+      <h2 class="section-title">Giving Every Kid<br>the Right Start</h2>
+      <div class="divider"></div>
+      <p class="about__body">
+        Every year, The Jones Gym opens its doors to the community to give children everything they need to walk into the classroom ready to learn.
+        From backpacks and school supplies to health screenings, haircuts, and live entertainment — the Back to School Bash is 100% free for families.
+      </p>
+      <p class="about__body">
+        None of it would be possible without the generous businesses, sponsors, volunteers, and performers who show up for our kids.
+        This is your invitation to be part of something bigger.
+      </p>
+    </div>
+
+    <!-- Stat cards -->
+    <div class="about__stats">
+      <div class="about__stat">
+        <span class="about__stat-num">4th</span>
+        <span class="about__stat-label">Annual Event</span>
+      </div>
+      <div class="about__stat">
+        <span class="about__stat-num">Free</span>
+        <span class="about__stat-label">For All Families</span>
+      </div>
+      <div class="about__stat">
+        <span class="about__stat-num">100+</span>
+        <span class="about__stat-label">Kids Served</span>
+      </div>
+      <div class="about__stat">
+        <span class="about__stat-num">∞</span>
+        <span class="about__stat-label">Community Impact</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENT DETAILS SECTION -->
+<section class="details" id="details">
+  <div class="container">
+    <p class="section-label">How to Participate</p>
+    <h2 class="section-title section-title--light">Ways You Can Help</h2>
+    <div class="divider"></div>
+
+    <div class="details__grid">
+      <div class="details__card">
+        <div class="details__icon">🎪</div>
+        <h3>Activity Stations</h3>
+        <p>Bounce houses, face painting, crafts, games, vision screenings, and more. Bring your service to our kids!</p>
+      </div>
+      <div class="details__card">
+        <div class="details__icon">🍕</div>
+        <h3>Food & Drinks</h3>
+        <p>Donate or serve food, snacks, or beverages. Help keep the energy up for a full day of fun.</p>
+      </div>
+      <div class="details__card">
+        <div class="details__icon">🎒</div>
+        <h3>Supply Donations</h3>
+        <p>Contribute backpacks, school supplies, snacks, ready-to-eat meals, or gift cards for students in need.</p>
+      </div>
+      <div class="details__card">
+        <div class="details__icon">🎤</div>
+        <h3>Entertainment</h3>
+        <p>Perform on stage for 30 minutes — musicians, magicians, dance groups, or anything that gets kids moving.</p>
+      </div>
+      <div class="details__card">
+        <div class="details__icon">🏆</div>
+        <h3>Sponsorship</h3>
+        <p>From Community Sponsor to Heavyweight ($1,000+), every level comes with recognition and community goodwill.</p>
+      </div>
+      <div class="details__card">
+        <div class="details__icon">🙌</div>
+        <h3>Volunteer</h3>
+        <p>Give your time on the day of the event. Setup, coordination, and support roles available for everyone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEEDS & NEEDS MET SECTION -->
+<section class="needs" id="needs">
+  <div class="container">
+    <p class="section-label">Event Tracker</p>
+    <h2 class="section-title">Needs &amp; Needs Met</h2>
+    <div class="divider"></div>
+    <p class="needs__sub">
+      Here's a live look at what we still need for the Bash — supplies, volunteers, vendors, entertainment, and funding.
+      See something you can cover? <button class="needs__link" (click)="scrollTo('register')">Sign up below.</button>
+    </p>
+
+    <!-- Live data status bar -->
+    @if (sheetsConnected) {
+      <div class="needs__status">
+        @if (loading) {
+          <span class="needs__status-dot needs__status-dot--loading"></span>
+          <span>Refreshing data…</span>
+        } @else if (error) {
+          <span class="needs__status-dot needs__status-dot--error"></span>
+          <span>Couldn't reach the sheet — showing last known data.</span>
+        } @else {
+          <span class="needs__status-dot needs__status-dot--live"></span>
+          <span>Live from Google Sheets</span>
+          @if (lastUpdated) {
+            <span class="needs__status-time">· updated {{ lastUpdated | date:'h:mm a' }}</span>
+          }
+        }
+        <button class="needs__status-refresh" (click)="loadSheetData()" [disabled]="loading" title="Refresh data">
+          ↻
+        </button>
+      </div>
+    }
+
+    <!-- ── Funding Goal Bar ── -->
+    <div class="needs__funding">
+      <div class="needs__funding-top">
+        <div class="needs__funding-raised">
+          <span class="needs__funding-amount">${{ fmt(fundingRaised) }}</span>
+          <span class="needs__funding-label">raised</span>
+        </div>
+        <div class="needs__funding-goal">
+          <span class="needs__funding-label">goal</span>
+          <span class="needs__funding-amount needs__funding-amount--goal">${{ fmt(fundingGoal) }}</span>
+        </div>
+      </div>
+      <div class="needs__bar-track">
+        <div class="needs__bar-fill" [style.width.%]="fundingPercent"></div>
+      </div>
+      <div class="needs__funding-stats">
+        <span class="needs__funding-pct">{{ fundingPercent }}% of goal reached</span>
+        <span class="needs__funding-items">{{ metItems }} of {{ totalItems }} needs filled</span>
+      </div>
+    </div>
+
+    <!-- ── Category Cards ── -->
+    <div class="needs__grid">
+      @for (cat of needCategories; track cat.id) {
+        <div class="needs__card" [class.needs__card--open]="isExpanded(cat)">
+          <button class="needs__card-header" (click)="toggleCategory(cat)" [attr.aria-expanded]="isExpanded(cat)">
+            <span class="needs__card-icon">{{ cat.icon }}</span>
+            <h3 class="needs__card-title">{{ cat.label }}</h3>
+            <span class="needs__card-badge"
+              [class.needs__card-badge--done]="metFor(cat) === cat.items.length">
+              {{ metFor(cat) }}/{{ cat.items.length }}
+            </span>
+            <span class="needs__card-chevron"></span>
+          </button>
+          <div class="needs__card-body">
+          <ul class="needs__list">
+            @for (item of cat.items; track item.name) {
+              <li class="needs__item" [class.needs__item--met]="isMet(item)" [class.needs__item--partial]="item.have > 0 && !isMet(item)">
+                <div class="needs__item-row">
+                  <span class="needs__name">{{ item.name }}</span>
+                  @if (item.need > 0) {
+                    <!-- Fixed target: show have / need fraction -->
+                    <span class="needs__fraction" [class.needs__fraction--partial]="item.have > 0" [class.needs__fraction--met]="isMet(item)">
+                      <strong>{{ item.have }}</strong><span class="needs__frac-sep">/</span>{{ item.need }}
+                    </span>
+                  } @else {
+                    <!-- Open-ended: show count only -->
+                    <span class="needs__count" [class.needs__count--active]="item.have > 0">
+                      <strong>{{ item.have }}</strong>
+                    </span>
+                  }
+                </div>
+                @if (item.detail) {
+                  <span class="needs__meta">{{ item.detail }}</span>
+                }
+                @if (item.need > 0) {
+                  <div class="needs__bar-row">
+                    <div class="needs__mini-track">
+                      <div class="needs__mini-fill"
+                        [style.width.%]="pct(item)"
+                        [class.needs__mini-fill--met]="isMet(item)">
+                      </div>
+                    </div>
+                    <span class="needs__unit">{{ item.unit }}</span>
+                  </div>
+                } @else {
+                  <span class="needs__unit needs__unit--open">{{ item.have === 1 ? item.unit.replace('confirmed', 'confirmed') : item.unit }}</span>
+                }
+              </li>
+            }
+          </ul>
+          </div><!-- /.needs__card-body -->
+        </div>
+      }
+    </div>
+
+    <!-- ── CTA ── -->
+    <div class="needs__footer">
+      <p>Every contribution — big or small — makes a real difference for our kids.</p>
+      <button class="btn btn--primary" (click)="scrollTo('register')">Sponsor or Volunteer</button>
+    </div>
+  </div>
+</section>
+
+<!-- SPONSORSHIP TIERS SECTION -->
+<section class="tiers" id="tiers">
+  <div class="container">
+    <p class="section-label">Sponsorship Levels</p>
+    <h2 class="section-title">Choose Your Impact</h2>
+    <div class="divider"></div>
+
+    <div class="tiers__grid">
+      <div class="tiers__card tiers__card--featured">
+        <div class="tiers__badge">Top Sponsor</div>
+        <h3 class="tiers__name">Heavyweight</h3>
+        <p class="tiers__amount">$1,000+</p>
+        <p class="tiers__desc">Premium logo placement, stage recognition, social media spotlight, and top-tier community visibility.</p>
+        <button class="btn btn--primary" (click)="scrollTo('register')">Become a Heavyweight</button>
+      </div>
+      <div class="tiers__card">
+        <h3 class="tiers__name">Champion</h3>
+        <p class="tiers__amount">$500</p>
+        <p class="tiers__desc">Logo on event materials, social media recognition, and prominent visibility on the day of the event.</p>
+        <button class="btn btn--outline" (click)="scrollTo('register')">Register</button>
+      </div>
+      <div class="tiers__card">
+        <h3 class="tiers__name">Contender</h3>
+        <p class="tiers__amount">$250</p>
+        <p class="tiers__desc">Business name on event signage and appreciation in our community network.</p>
+        <button class="btn btn--outline" (click)="scrollTo('register')">Register</button>
+      </div>
+      <div class="tiers__card">
+        <h3 class="tiers__name">Community Sponsor</h3>
+        <p class="tiers__amount">Any Amount</p>
+        <p class="tiers__desc">Every dollar goes directly toward making this event possible for families who need it most.</p>
+        <button class="btn btn--outline" (click)="scrollTo('register')">Register</button>
+      </div>
+    </div>
+
+    <!-- ── Sponsor Wall (auto-populated from Google Sheets) ── -->
+    @if (sponsorGroups.length > 0) {
+      <div class="sponsors">
+        <p class="sponsors__label">Thank You to Our Sponsors</p>
+        <div class="sponsors__divider"></div>
+
+        @for (group of sponsorGroups; track group.tier) {
+          <div class="sponsors__group">
+            <span class="sponsors__tier sponsors__tier--{{ group.tier }}">{{ group.label }}</span>
+            <div class="sponsors__names">
+              @for (s of group.sponsors; track s.name) {
+                @if (s.website) {
+                  <a class="sponsors__chip sponsors__chip--{{ group.tier }}"
+                     [href]="s.website" target="_blank" rel="noopener noreferrer">
+                    {{ s.name }}<span class="sponsors__ext">↗</span>
+                  </a>
+                } @else {
+                  <span class="sponsors__chip sponsors__chip--{{ group.tier }}">{{ s.name }}</span>
+                }
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,32 @@
+<nav class="navbar" [class.navbar--scrolled]="scrolled">
+  <div class="navbar__inner container">
+    <!-- Logo -->
+    <a class="navbar__brand" href="https://www.thejonesgym.com" target="_blank" rel="noopener">
+      <span class="navbar__brand-text">The Jones Gym</span>
+      <span class="navbar__brand-sub">Back to School Bash</span>
+    </a>
+
+    <!-- Desktop nav links -->
+    <ul class="navbar__links">
+      <li><button (click)="scrollTo('about')">About</button></li>
+      <li><button (click)="scrollTo('details')">Event Details</button></li>
+      <li><button (click)="scrollTo('needs')">Needs</button></li>
+      <li><button (click)="scrollTo('register')" class="btn btn--primary btn--sm">Register / Sponsor</button></li>
+    </ul>
+
+    <!-- Hamburger -->
+    <button class="navbar__hamburger" (click)="toggleMenu()" [class.open]="menuOpen" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="navbar__mobile" [class.navbar__mobile--open]="menuOpen">
+    <ul>
+      <li><button (click)="scrollTo('about')">About</button></li>
+      <li><button (click)="scrollTo('details')">Event Details</button></li>
+      <li><button (click)="scrollTo('needs')">Needs</button></li>
+      <li><button (click)="scrollTo('register')">Register / Sponsor</button></li>
+    </ul>
+  </div>
+</nav>

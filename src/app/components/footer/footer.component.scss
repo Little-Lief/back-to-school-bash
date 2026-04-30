@@ -1,0 +1,87 @@
+.footer {
+  background: var(--color-dark);
+  border-top: 1px solid rgba(200,168,75,0.2);
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-top: 40px;
+    padding-bottom: 32px;
+  }
+
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  &__brand-name {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-white);
+  }
+
+  &__brand-event {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  &__nav {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+
+    button {
+      background: none;
+      border: none;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: color var(--transition);
+      padding: 4px 0;
+
+      &:hover {
+        color: var(--color-gold);
+      }
+    }
+  }
+
+  &__site-link {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    transition: color var(--transition);
+
+    &:hover {
+      color: var(--color-gold-light);
+    }
+  }
+
+  &__bottom {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 20px;
+    padding-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.3);
+    }
+  }
+}

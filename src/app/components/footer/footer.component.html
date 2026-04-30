@@ -1,0 +1,24 @@
+<footer class="footer">
+  <div class="footer__inner container">
+    <div class="footer__brand">
+      <span class="footer__brand-name">The Jones Gym</span>
+      <span class="footer__brand-event">4th Annual Back to School Bash</span>
+    </div>
+
+    <nav class="footer__nav">
+      <button (click)="scrollTo('about')">About</button>
+      <button (click)="scrollTo('details')">How to Help</button>
+      <button (click)="scrollTo('tiers')">Sponsorship</button>
+      <button (click)="scrollTo('register')">Register</button>
+    </nav>
+
+    <a class="footer__site-link" href="https://www.thejonesgym.com" target="_blank" rel="noopener">
+      Visit The Jones Gym &rarr;
+    </a>
+  </div>
+
+  <div class="footer__bottom container">
+    <p>&copy; {{ year }} The Jones Gym. All rights reserved.</p>
+    <p>Made with community love.</p>
+  </div>
+</footer>

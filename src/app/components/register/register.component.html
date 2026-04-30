@@ -1,0 +1,158 @@
+<section class="register" id="register">
+  <div class="register__header">
+    <div class="container">
+      <p class="section-label">Get Involved</p>
+      <h2 class="section-title section-title--light">Become a Sponsor or Volunteer</h2>
+      <div class="divider"></div>
+      <p class="register__sub">
+        Whether you want to sponsor the event, volunteer your time, donate supplies,
+        run an activity station, or perform — we'd love to have you.
+        Fill out the form and someone from The Jones Gym team will reach out directly.
+      </p>
+    </div>
+  </div>
+
+  <div class="register__form-wrap container">
+    <div class="register__form-card">
+
+      <!-- Success state -->
+      @if (success) {
+        <div class="register__success">
+          <div class="register__success-icon">✓</div>
+          <h3>You're In!</h3>
+          <p>Thanks for reaching out. The Jones Gym team will follow up with you shortly.</p>
+          <button class="btn btn--outline" (click)="success = false">Submit Another</button>
+        </div>
+      } @else {
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+
+          <!-- Row 1: Name + Organization -->
+          <div class="register__row">
+            <div class="register__field">
+              <label for="name">Full Name <span class="register__req">*</span></label>
+              <input
+                id="name"
+                type="text"
+                formControlName="name"
+                placeholder="Jane Smith"
+                [class.register__input--error]="fieldInvalid('name')"
+              />
+              @if (fieldInvalid('name')) {
+                <span class="register__error">Name is required</span>
+              }
+            </div>
+            <div class="register__field">
+              <label for="organization">Business / Organization</label>
+              <input
+                id="organization"
+                type="text"
+                formControlName="organization"
+                placeholder="Acme Co. (optional)"
+              />
+            </div>
+          </div>
+
+          <!-- Row 2: Email + Phone -->
+          <div class="register__row">
+            <div class="register__field">
+              <label for="email">Email Address <span class="register__req">*</span></label>
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                placeholder="jane@example.com"
+                [class.register__input--error]="fieldInvalid('email')"
+              />
+              @if (fieldInvalid('email')) {
+                <span class="register__error">A valid email is required</span>
+              }
+            </div>
+            <div class="register__field">
+              <label for="phone">Phone Number</label>
+              <input
+                id="phone"
+                type="tel"
+                formControlName="phone"
+                placeholder="(555) 000-0000"
+              />
+            </div>
+          </div>
+
+          <!-- Row 3: Role + Sub-option side by side when both visible -->
+          <div class="register__row" [class.register__row--single]="!currentSubOptions && selectedRole !== 'other'">
+
+            <!-- Role -->
+            <div class="register__field">
+              <label for="role">How would you like to help? <span class="register__req">*</span></label>
+              <select
+                id="role"
+                formControlName="role"
+                (change)="onRoleChange()"
+                [class.register__input--error]="fieldInvalid('role')"
+              >
+                <option value="" disabled>Select a role…</option>
+                @for (r of roles; track r.value) {
+                  <option [value]="r.value">{{ r.label }}</option>
+                }
+              </select>
+              @if (fieldInvalid('role')) {
+                <span class="register__error">Please select a role</span>
+              }
+            </div>
+
+            <!-- Sub-option (activity / tier / position) -->
+            @if (currentSubOptions) {
+              <div class="register__field register__field--animate">
+                <label for="subOption">{{ currentSubLabel }}</label>
+                <select id="subOption" formControlName="subOption">
+                  <option value="" disabled>Choose one…</option>
+                  @for (opt of currentSubOptions; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </div>
+            }
+          </div>
+
+          <!-- Volunteer position descriptions -->
+          @if (selectedRole === 'volunteer') {
+            <div class="register__hint register__field--animate">
+              <span class="register__hint-icon">💡</span>
+              All volunteer positions are on the day of the event. We'll send a schedule and arrival time once you're confirmed.
+            </div>
+          }
+
+          <!-- Message — always shown, label shifts for "other" -->
+          <div class="register__field">
+            <label for="message">
+              @if (isOther) {
+                Tell us how you'd like to help <span class="register__req">*</span>
+              } @else {
+                Anything else we should know?
+              }
+            </label>
+            <textarea
+              id="message"
+              formControlName="message"
+              rows="4"
+              [placeholder]="isOther
+                ? 'Describe how you\'d like to contribute to the Back to School Bash…'
+                : 'Tell us about your business, what you\'d like to donate, or any questions you have…'"
+            ></textarea>
+          </div>
+
+          <!-- Submit -->
+          <div class="register__actions">
+            <button type="submit" class="btn btn--primary register__submit">
+              Send My Info
+            </button>
+            <p class="register__note">
+              No payment collected here — our team will reach out to finalize details.
+            </p>
+          </div>
+
+        </form>
+      }
+    </div>
+  </div>
+</section>

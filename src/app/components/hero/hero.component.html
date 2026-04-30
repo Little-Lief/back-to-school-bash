@@ -1,0 +1,19 @@
+<section class="hero">
+  <div class="hero__overlay"></div>
+  <div class="hero__content container">
+    <p class="section-label">Jones Gym Presents</p>
+    <h1 class="hero__title">4th Annual<br><span class="hero__title--gold">Back to School</span><br>Bash</h1>
+    <p class="hero__date">
+      <span class="hero__date-icon">📅</span>
+      August 15, 2026 &nbsp;|&nbsp; The Jones Gym
+    </p>
+    <p class="hero__sub">A free community event giving kids the tools and inspiration they need to succeed in the classroom.</p>
+    <div class="hero__cta">
+      <button class="btn btn--primary" (click)="scrollTo('register')">Sponsor or Volunteer</button>
+      <button class="btn btn--outline" (click)="scrollTo('about')">Learn More</button>
+    </div>
+  </div>
+  <div class="hero__scroll-hint" (click)="scrollTo('about')">
+    <span></span>
+  </div>
+</section>

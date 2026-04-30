@@ -1,0 +1,158 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: transparent;
+  transition: background var(--transition), box-shadow var(--transition);
+
+  &--scrolled {
+    background: var(--color-black);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    text-decoration: none;
+  }
+
+  &__brand-text {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-white);
+  }
+
+  &__brand-sub {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+
+    button {
+      background: none;
+      border: none;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--color-white);
+      cursor: pointer;
+      transition: color var(--transition);
+      padding: 6px 0;
+
+      &:hover {
+        color: var(--color-gold);
+      }
+
+      &.btn {
+        color: var(--color-black);
+        padding: 10px 24px;
+        font-size: 0.85rem;
+
+        &:hover {
+          color: var(--color-black);
+        }
+      }
+
+      // Re-assert btn--primary gold bg — the `background: none` reset above wins on specificity
+      &.btn--primary {
+        background: var(--color-gold);
+        border: 2px solid var(--color-gold);
+
+        &:hover {
+          background: var(--color-gold-light);
+          border-color: var(--color-gold-light);
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+
+    span {
+      display: block;
+      width: 26px;
+      height: 2px;
+      background: var(--color-white);
+      transition: all var(--transition);
+      transform-origin: center;
+    }
+
+    &.open {
+      span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      span:nth-child(2) { opacity: 0; }
+      span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    }
+
+    @media (max-width: 768px) {
+      display: flex;
+    }
+  }
+
+  &__mobile {
+    max-height: 0;
+    overflow: hidden;
+    background: var(--color-black);
+    transition: max-height 0.35s ease;
+
+    &--open {
+      max-height: 300px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 16px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      button {
+        background: none;
+        border: none;
+        font-family: var(--font-heading);
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--color-white);
+        cursor: pointer;
+        padding: 8px 0;
+
+        &:hover {
+          color: var(--color-gold);
+        }
+      }
+    }
+  }
+}

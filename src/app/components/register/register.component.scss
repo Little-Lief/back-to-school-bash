@@ -1,0 +1,219 @@
+.register {
+  background: var(--color-black);
+
+  &__header {
+    padding: 80px 0 48px;
+    text-align: center;
+
+    .section-label { color: var(--color-gold); }
+    .divider { margin-left: auto; margin-right: auto; }
+  }
+
+  &__sub {
+    max-width: 620px;
+    margin: 0 auto;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.8;
+  }
+
+  &__form-wrap {
+    padding-bottom: 100px;
+  }
+
+  // ---- Card ----
+  &__form-card {
+    background: var(--color-dark);
+    border-radius: 8px;
+    border: 1px solid rgba(200, 168, 75, 0.2);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+    padding: 56px 48px;
+
+    @media (max-width: 640px) {
+      padding: 36px 24px;
+    }
+  }
+
+  // ---- Layout ----
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+
+    &--single {
+      grid-template-columns: 1fr;
+    }
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+
+    &--animate {
+      animation: slideDown 0.2s ease;
+    }
+
+    label {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    input,
+    select,
+    textarea {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius);
+      color: var(--color-white);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      padding: 14px 16px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+      width: 100%;
+      appearance: none;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.25);
+      }
+
+      &:focus {
+        border-color: var(--color-gold);
+        box-shadow: 0 0 0 3px rgba(200, 168, 75, 0.15);
+      }
+
+      // Error state
+      &.register__input--error {
+        border-color: var(--color-red);
+        box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12);
+      }
+    }
+
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c8a84b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+
+      option {
+        background: var(--color-dark);
+        color: var(--color-white);
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+  }
+
+  // ---- Volunteer hint ----
+  &__hint {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: rgba(200, 168, 75, 0.08);
+    border: 1px solid rgba(200, 168, 75, 0.2);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+  }
+
+  &__hint-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  // ---- Validation ----
+  &__req {
+    color: var(--color-gold);
+  }
+
+  &__error {
+    font-size: 0.8rem;
+    color: #e07070;
+    margin-top: -4px;
+  }
+
+  // ---- Actions ----
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  &__submit {
+    padding: 16px 48px;
+    font-size: 1rem;
+  }
+
+  &__note {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.35);
+    line-height: 1.5;
+    max-width: 320px;
+  }
+
+  // ---- Success state ----
+  &__success {
+    text-align: center;
+    padding: 48px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+
+    h3 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--color-white);
+      letter-spacing: 1px;
+    }
+
+    p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.65);
+      max-width: 400px;
+      line-height: 1.7;
+    }
+  }
+
+  &__success-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(200, 168, 75, 0.15);
+    border: 2px solid var(--color-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--color-gold);
+    margin-bottom: 8px;
+  }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
