@@ -111,6 +111,7 @@ export class AboutComponent implements OnInit {
         { name: 'Health & Wellness Screening', detail: 'Licensed medical professional needed',      have: 0, need: 1, unit: 'station' },
         { name: 'Games & Activities',          detail: '',                                           have: 0, need: 3, unit: 'stations' },
         { name: 'Haircuts',                    detail: 'Licensed barber or stylist',                 have: 0, need: 2, unit: 'stylists' },
+        { name: 'Photo Station',               detail: 'Free back-to-school photos for families',   have: 0, need: 1, unit: 'station' },
       ]
     },
     {
