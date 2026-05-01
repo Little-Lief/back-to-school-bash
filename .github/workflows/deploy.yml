@@ -31,7 +31,7 @@ jobs:
           SHEETS_SECRET_TOKEN: ${{ secrets.SHEETS_SECRET_TOKEN }}
 
       - name: Build
-        run: npm run build -- --configuration production --base-href /back-to-school-bash/
+        run: npm run build -- --configuration production --base-href /
 
       - name: Copy index.html to 404.html (fixes deep-link routing)
         run: cp dist/back-to-school-bash/browser/index.html dist/back-to-school-bash/browser/404.html
