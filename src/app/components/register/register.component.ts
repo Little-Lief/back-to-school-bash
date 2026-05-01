@@ -93,6 +93,7 @@ export class RegisterComponent {
       phone:        [''],
       role:         ['', Validators.required],
       subOption:    [''],
+      website:      [''],
       message:      [''],
     });
   }
@@ -117,6 +118,7 @@ export class RegisterComponent {
 
   onRoleChange(): void {
     this.form.get('subOption')?.reset('');
+    this.form.get('website')?.reset('');
   }
 
   fieldInvalid(field: string): boolean {
@@ -149,6 +151,12 @@ export class RegisterComponent {
         entertainment: 'entry.270268180',  // Entertainment options
       };
       if (subEntry[v.role]) entryMap[subEntry[v.role]] = subLabel;
+    }
+
+    // For sponsors, embed website in the participation field so the sheet can read it
+    if (v.role === 'sponsor' && v.website) {
+      entryMap['entry.1832023793'] =
+        `${entryMap['entry.1832023793']} | Website: ${v.website}`.trim();
     }
 
     // Notes / message — append to a combined field if present

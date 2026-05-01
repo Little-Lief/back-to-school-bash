@@ -114,6 +114,19 @@
             }
           </div>
 
+          <!-- Website — sponsors only -->
+          @if (selectedRole === 'sponsor') {
+            <div class="register__field register__field--animate">
+              <label for="website">Business Website</label>
+              <input
+                id="website"
+                type="url"
+                formControlName="website"
+                placeholder="https://yourbusiness.com (optional)"
+              />
+            </div>
+          }
+
           <!-- Volunteer position descriptions -->
           @if (selectedRole === 'volunteer') {
             <div class="register__hint register__field--animate">

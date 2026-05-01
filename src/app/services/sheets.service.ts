@@ -14,8 +14,8 @@ export interface SheetPayload {
 export const TIER_ORDER = ['heavyweight', 'champion', 'contender'] as const;
 export type DisplayTier = typeof TIER_ORDER[number];
 
-// ── Known sponsor websites (form doesn't collect URLs, so we maintain this) ──
-const SPONSOR_WEBSITES: Record<string, string> = {
+// ── Fallback websites for sponsors who signed up before the website field was added ──
+const SPONSOR_WEBSITES_FALLBACK: Record<string, string> = {
   'gurrera plumbing': 'https://www.gurreraplumbing.com',
   'beyond kids':      'https://www.facebook.com/p/Beyond-Kids-LLC-100066502358805/',
 };
@@ -110,7 +110,12 @@ export class SheetsService {
                level.includes('contender'))                                                  tier = 'contender';
 
       if (tier) {
-        const website = SPONSOR_WEBSITES[name.toLowerCase()] ?? '';
+        // Try to parse website from "| Website: https://..." embedded in participation field
+        const part = String(row[COL_PARTICIPATION] ?? '');
+        const websiteMatch = part.match(/Website:\s*(https?:\/\/\S+)/i);
+        const website = websiteMatch?.[1]
+          ?? SPONSOR_WEBSITES_FALLBACK[name.toLowerCase()]
+          ?? '';
         result.push({ name, tier, website });
       }
     }
