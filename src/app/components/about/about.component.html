@@ -116,19 +116,39 @@
     <div class="needs__funding">
       <div class="needs__funding-top">
         <div class="needs__funding-raised">
-          <span class="needs__funding-amount">${{ fmt(fundingRaised) }}</span>
-          <span class="needs__funding-label">raised</span>
+          <span class="needs__funding-amount">${{ fmt(fundingPledged) }}</span>
+          <span class="needs__funding-label">pledged</span>
+        </div>
+        <div class="needs__funding-paid">
+          <span class="needs__funding-amount needs__funding-amount--paid">${{ fmt(fundingPaid) }}</span>
+          <span class="needs__funding-label">received</span>
         </div>
         <div class="needs__funding-goal">
           <span class="needs__funding-label">goal</span>
           <span class="needs__funding-amount needs__funding-amount--goal">${{ fmt(fundingGoal) }}</span>
         </div>
       </div>
-      <div class="needs__bar-track">
-        <div class="needs__bar-fill" [style.width.%]="fundingPercent"></div>
+
+      <!-- Pledged bar -->
+      <div class="needs__bar-label">
+        <span>Pledged</span>
+        <span>{{ pledgedPercent }}%</span>
       </div>
+      <div class="needs__bar-track">
+        <div class="needs__bar-fill needs__bar-fill--pledged" [style.width.%]="pledgedPercent"></div>
+      </div>
+
+      <!-- Paid bar -->
+      <div class="needs__bar-label needs__bar-label--paid">
+        <span>Received</span>
+        <span>{{ paidPercent }}%</span>
+      </div>
+      <div class="needs__bar-track">
+        <div class="needs__bar-fill needs__bar-fill--paid" [style.width.%]="paidPercent"></div>
+      </div>
+
       <div class="needs__funding-stats">
-        <span class="needs__funding-pct">{{ fundingPercent }}% of goal reached</span>
+        <span class="needs__funding-pct">{{ pledgedPercent }}% of goal pledged</span>
         <span class="needs__funding-items">{{ metItems }} of {{ totalItems }} needs filled</span>
       </div>
     </div>

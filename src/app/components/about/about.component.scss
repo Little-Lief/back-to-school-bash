@@ -217,10 +217,15 @@
   }
 
   &__funding-raised,
+  &__funding-paid,
   &__funding-goal {
     display: flex;
     flex-direction: column;
     gap: 2px;
+  }
+
+  &__funding-paid {
+    align-items: center;
   }
 
   &__funding-goal {
@@ -242,26 +247,53 @@
     color: var(--color-gold);
     line-height: 1;
 
+    &--paid {
+      font-size: 1.6rem;
+      color: #fff;
+    }
+
     &--goal {
       font-size: 1.4rem;
       color: rgba(255, 255, 255, 0.7);
     }
   }
 
+  &__bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-heading);
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 6px;
+
+    &--paid {
+      margin-top: 12px;
+      color: rgba(255, 255, 255, 0.65);
+    }
+  }
+
   &__bar-track {
     height: 10px;
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 99px;
     overflow: hidden;
-    margin-bottom: 14px;
   }
 
   &__bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light));
     border-radius: 99px;
     transition: width 0.8s ease;
-    min-width: 4px; // always show a sliver
+    min-width: 4px;
+
+    &--pledged {
+      background: rgba(200, 168, 75, 0.45);
+    }
+
+    &--paid {
+      background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light));
+    }
   }
 
   &__funding-stats {

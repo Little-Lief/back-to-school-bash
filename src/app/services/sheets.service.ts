@@ -6,7 +6,8 @@ import { environment } from '../../environments/environment';
 export interface SheetRow   { category: string; name: string; have: number; }
 export interface Sponsor    { name: string; tier: string; website: string; }
 export interface SheetPayload {
-  fundingRaised: number;
+  fundingPledged: number;
+  fundingPaid:    number;
   items: SheetRow[];
   sponsors: Sponsor[];
 }
@@ -40,7 +41,7 @@ export class SheetsService {
 
   fetch(): Observable<SheetPayload> {
     if (!this.isConfigured) {
-      return of({ fundingRaised: 0, items: [], sponsors: [] });
+      return of({ fundingPledged: 0, fundingPaid: 0, items: [], sponsors: [] });
     }
 
     const url = `${environment.sheetsScriptUrl}?token=${encodeURIComponent(environment.sheetsSecretToken)}`;
@@ -52,7 +53,7 @@ export class SheetsService {
       }),
       catchError(err => {
         console.warn('[Sheets] Fetch failed:', err);
-        return of({ fundingRaised: 0, items: [], sponsors: [] });
+        return of({ fundingPledged: 0, fundingPaid: 0, items: [], sponsors: [] });
       })
     );
   }
@@ -62,10 +63,12 @@ export class SheetsService {
     // All responses live in the single "form responses 1" tab
     const rows = (raw['form responses 1'] ?? []) as Record<string, unknown>[];
 
+    const { pledged, paid } = this.extractFunding(raw, rows);
     return {
-      fundingRaised: this.extractFunding(rows),
-      items:         this.extractItems(rows),
-      sponsors:      this.extractSponsors(rows),
+      fundingPledged: pledged,
+      fundingPaid:    paid,
+      items:          this.extractItems(rows),
+      sponsors:       this.extractSponsors(rows),
     };
   }
 
@@ -80,17 +83,47 @@ export class SheetsService {
            String(row[COL_CONTACT]  ?? '').trim();
   }
 
-  // ── Funding raised ────────────────────────────────────────────────────────────
-  private extractFunding(rows: Record<string, unknown>[]): number {
-    let total = 0;
-    for (const row of rows) {
+  // ── Funding (pledged vs paid) ─────────────────────────────────────────────────
+  // Prefers a dedicated "funding" tab with columns: amount, pledged, paid.
+  // Falls back to summing sponsorship levels from form responses as pledged only.
+  private extractFunding(
+    raw: Record<string, unknown[]>,
+    formRows: Record<string, unknown>[]
+  ): { pledged: number; paid: number } {
+    const fundingTab = (
+      raw['funding'] ?? raw['Funding'] ?? raw['payments'] ?? raw['Payments'] ?? []
+    ) as Record<string, unknown>[];
+
+    if (fundingTab.length > 0) {
+      let pledged = 0;
+      let paid    = 0;
+      for (const row of fundingTab) {
+        const amount  = Number(row['amount']  ?? row['Amount']  ?? 0);
+        const isPledged = this.isTruthy(row['pledged']  ?? row['Pledged']);
+        const isPaid    = this.isTruthy(row['paid']     ?? row['Paid'] ??
+                                        row['fulfilled'] ?? row['Fulfilled']);
+        if (isPledged || isPaid) pledged += amount;
+        if (isPaid)              paid    += amount;
+      }
+      return { pledged, paid };
+    }
+
+    // Fallback — treat all sponsor form responses as pledged, none as paid
+    let pledged = 0;
+    for (const row of formRows) {
       const level = this.val(row, COL_SPONSOR_LEVEL);
       if (!level) continue;
-      if      (level.includes('1000')) total += 1000;
-      else if (level.includes('500'))  total += 500;
-      else if (level.includes('250'))  total += 250;
+      if      (level.includes('1000')) pledged += 1000;
+      else if (level.includes('500'))  pledged += 500;
+      else if (level.includes('250'))  pledged += 250;
     }
-    return total;
+    return { pledged, paid: 0 };
+  }
+
+  private isTruthy(val: unknown): boolean {
+    if (!val) return false;
+    const s = String(val).trim().toLowerCase();
+    return s === 'yes' || s === 'true' || s === '1' || s === 'x' || s.length > 0;
   }
 
   // ── Sponsor wall ──────────────────────────────────────────────────────────────

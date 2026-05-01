@@ -28,8 +28,9 @@ export class AboutComponent implements OnInit {
   private sheets = inject(SheetsService);
 
   // ── Funding goal ─────────────────────────────────────────────
-  fundingGoal   = 10_000;
-  fundingRaised =      0;   // overwritten by sheet data
+  fundingGoal     = 15_000;
+  fundingPledged  =      0;   // committed — overwritten by sheet data
+  fundingPaid     =      0;   // received  — overwritten by sheet data
 
   loading = false;
   lastUpdated: Date | null = null;
@@ -58,8 +59,12 @@ export class AboutComponent implements OnInit {
     return this.sheets.isConfigured;
   }
 
-  get fundingPercent(): number {
-    return Math.min(100, Math.round((this.fundingRaised / this.fundingGoal) * 100));
+  get pledgedPercent(): number {
+    return Math.min(100, Math.round((this.fundingPledged / this.fundingGoal) * 100));
+  }
+
+  get paidPercent(): number {
+    return Math.min(100, Math.round((this.fundingPaid / this.fundingGoal) * 100));
   }
 
   fmt(n: number): string {
@@ -166,7 +171,8 @@ export class AboutComponent implements OnInit {
 
     this.sheets.fetch().subscribe({
       next: payload => {
-        this.fundingRaised = payload.fundingRaised ?? this.fundingRaised;
+        this.fundingPledged = payload.fundingPledged ?? this.fundingPledged;
+        this.fundingPaid    = payload.fundingPaid    ?? this.fundingPaid;
         this.applyItems(payload.items ?? []);
         this.sponsors = payload.sponsors ?? [];
         this.lastUpdated = new Date();
