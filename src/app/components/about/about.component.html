@@ -234,26 +234,31 @@
     <!-- ── Sponsor Wall (auto-populated from Google Sheets) ── -->
     @if (sponsorGroups.length > 0) {
       <div class="sponsors">
-        <p class="sponsors__label">Thank You to Our Sponsors</p>
-        <div class="sponsors__divider"></div>
+        <p class="section-label">Thank You to Our Sponsors</p>
+        <h2 class="section-title">Our Community Partners</h2>
+        <div class="divider"></div>
 
-        @for (group of sponsorGroups; track group.tier) {
-          <div class="sponsors__group">
-            <span class="sponsors__tier sponsors__tier--{{ group.tier }}">{{ group.label }}</span>
-            <div class="sponsors__names">
-              @for (s of group.sponsors; track s.name) {
-                @if (s.website) {
-                  <a class="sponsors__chip sponsors__chip--{{ group.tier }}"
-                     [href]="s.website" target="_blank" rel="noopener noreferrer">
-                    {{ s.name }}<span class="sponsors__ext">↗</span>
-                  </a>
-                } @else {
-                  <span class="sponsors__chip sponsors__chip--{{ group.tier }}">{{ s.name }}</span>
+        <div class="sponsors__grid">
+          @for (group of sponsorGroups; track group.tier) {
+            <div class="sponsors__category sponsors__category--{{ group.tier }}">
+              <div class="sponsors__category-header">
+                <span class="sponsors__category-tier">{{ group.label }}</span>
+              </div>
+              <div class="sponsors__names">
+                @for (s of group.sponsors; track s.name) {
+                  @if (s.website) {
+                    <a class="sponsors__chip sponsors__chip--{{ group.tier }}"
+                       [href]="s.website" target="_blank" rel="noopener noreferrer">
+                      {{ s.name }}<span class="sponsors__ext">↗</span>
+                    </a>
+                  } @else {
+                    <span class="sponsors__chip sponsors__chip--{{ group.tier }}">{{ s.name }}</span>
+                  }
                 }
-              }
+              </div>
             </div>
-          </div>
-        }
+          }
+        </div>
       </div>
     }
   </div>
