@@ -258,37 +258,26 @@
     }
   }
 
-  &__bar-label {
-    display: flex;
-    justify-content: space-between;
-    font-family: var(--font-heading);
-    font-size: 0.65rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.45);
-    margin-bottom: 6px;
-
-    &--paid {
-      margin-top: 12px;
-      color: rgba(255, 255, 255, 0.65);
-    }
-  }
-
   &__bar-track {
-    height: 10px;
+    position: relative;
+    height: 12px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 99px;
     overflow: hidden;
+    margin-bottom: 14px;
   }
 
   &__bar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
     border-radius: 99px;
     transition: width 0.8s ease;
     min-width: 4px;
 
     &--pledged {
-      background: rgba(200, 168, 75, 0.45);
+      background: rgba(200, 168, 75, 0.4);
     }
 
     &--paid {
@@ -296,18 +285,44 @@
     }
   }
 
+  &__bar-legend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-heading);
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  &__legend-swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+
+    &--pledged { background: rgba(200, 168, 75, 0.4); margin-left: 8px; }
+    &--paid    { background: var(--color-gold); }
+  }
+
   &__funding-stats {
     display: flex;
     justify-content: space-between;
-    font-size: 0.82rem;
+    align-items: center;
+    font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.65);
     font-family: var(--font-heading);
     letter-spacing: 0.5px;
     text-transform: uppercase;
+    flex-wrap: wrap;
+    gap: 8px;
 
-    @media (max-width: 480px) {
+    @media (max-width: 560px) {
       flex-direction: column;
-      gap: 4px;
+      align-items: flex-start;
+      gap: 6px;
     }
   }
 

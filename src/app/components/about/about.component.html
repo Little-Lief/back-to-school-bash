@@ -129,26 +129,19 @@
         </div>
       </div>
 
-      <!-- Pledged bar -->
-      <div class="needs__bar-label">
-        <span>Pledged</span>
-        <span>{{ pledgedPercent }}%</span>
-      </div>
+      <!-- Combined bar -->
       <div class="needs__bar-track">
         <div class="needs__bar-fill needs__bar-fill--pledged" [style.width.%]="pledgedPercent"></div>
+        <div class="needs__bar-fill needs__bar-fill--paid"    [style.width.%]="paidPercent"></div>
       </div>
 
-      <!-- Paid bar -->
-      <div class="needs__bar-label needs__bar-label--paid">
-        <span>Received</span>
-        <span>{{ paidPercent }}%</span>
-      </div>
-      <div class="needs__bar-track">
-        <div class="needs__bar-fill needs__bar-fill--paid" [style.width.%]="paidPercent"></div>
-      </div>
-
+      <!-- Legend + stats -->
       <div class="needs__funding-stats">
         <span class="needs__funding-pct">{{ pledgedPercent }}% of goal pledged</span>
+        <div class="needs__bar-legend">
+          <span class="needs__legend-swatch needs__legend-swatch--pledged"></span><span>Pledged</span>
+          <span class="needs__legend-swatch needs__legend-swatch--paid"></span><span>Received</span>
+        </div>
         <span class="needs__funding-items">{{ metItems }} of {{ totalItems }} needs filled</span>
       </div>
     </div>
