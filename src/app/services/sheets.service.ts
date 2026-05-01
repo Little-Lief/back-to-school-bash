@@ -14,6 +14,11 @@ export interface SheetPayload {
 export const TIER_ORDER = ['heavyweight', 'champion', 'contender'] as const;
 export type DisplayTier = typeof TIER_ORDER[number];
 
+// ── Known sponsor websites (form doesn't collect URLs, so we maintain this) ──
+const SPONSOR_WEBSITES: Record<string, string> = {
+  'gurrera plumbing': 'https://www.gurreraplumbing.com',
+};
+
 // ── Column keys exactly as returned by the Apps Script (lowercased headers) ──
 const COL_PARTICIPATION = "how would you like to participate? this is a free event for the community and kids, and we kindly ask that all items and services be offered at no cost.";
 const COL_ACTIVITY      = "activity or services stations";
@@ -103,7 +108,10 @@ export class SheetsService {
       else if (level.includes('250')  || level.includes('strength builder') ||
                level.includes('contender'))                                                  tier = 'contender';
 
-      if (tier) result.push({ name, tier, website: '' });
+      if (tier) {
+        const website = SPONSOR_WEBSITES[name.toLowerCase()] ?? '';
+        result.push({ name, tier, website });
+      }
     }
     return result;
   }

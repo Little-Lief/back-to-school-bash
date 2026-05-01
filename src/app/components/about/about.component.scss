@@ -754,37 +754,38 @@
 
   &__chip {
     font-family: var(--font-heading);
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     border-radius: var(--radius);
-    padding: 10px 20px;
+    padding: 16px 32px;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     text-decoration: none;
     transition: transform var(--transition), box-shadow var(--transition);
 
     &--heavyweight {
-      font-size: 1.1rem;
+      font-size: 1.5rem;
       background: var(--color-black);
       color: var(--color-gold);
       border: 2px solid var(--color-gold);
+      letter-spacing: 2px;
 
-      &:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(200, 168, 75, 0.25); }
+      &:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(200, 168, 75, 0.35); }
     }
 
     &--champion {
-      font-size: 0.95rem;
+      font-size: 1.2rem;
       background: var(--color-white);
       color: var(--color-black);
       border: 2px solid var(--color-gold);
 
-      &:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(200, 168, 75, 0.2); }
+      &:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(200, 168, 75, 0.25); }
     }
 
     &--contender {
-      font-size: 0.85rem;
+      font-size: 1rem;
       background: var(--color-white);
       color: var(--color-charcoal);
       border: 1px solid var(--color-light-gray);
