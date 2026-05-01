@@ -17,7 +17,7 @@ export type DisplayTier = typeof TIER_ORDER[number];
 // ── Known sponsor websites (form doesn't collect URLs, so we maintain this) ──
 const SPONSOR_WEBSITES: Record<string, string> = {
   'gurrera plumbing': 'https://www.gurreraplumbing.com',
-  'beyond kids':      'https://www.beyondkidsllc.com',
+  'beyond kids':      'https://www.facebook.com/p/Beyond-Kids-LLC-100066502358805/',
 };
 
 // ── Column keys exactly as returned by the Apps Script (lowercased headers) ──
