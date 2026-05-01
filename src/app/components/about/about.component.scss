@@ -719,11 +719,11 @@
     }
 
     .sponsors__category--champion & {
-      background: rgba(200, 168, 75, 0.1);
+      background: var(--color-gold);
     }
 
     .sponsors__category--contender & {
-      background: var(--color-off-white);
+      background: var(--color-gold);
     }
   }
 
@@ -735,8 +735,8 @@
     text-transform: uppercase;
 
     .sponsors__category--heavyweight & { color: var(--color-gold); }
-    .sponsors__category--champion &    { color: #8a6e1f; }
-    .sponsors__category--contender &   { color: var(--color-charcoal); }
+    .sponsors__category--champion &    { color: var(--color-black); }
+    .sponsors__category--contender &   { color: var(--color-black); }
   }
 
   &__names {
