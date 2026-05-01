@@ -68,7 +68,11 @@
       color: rgba(255, 255, 255, 0.7);
     }
 
-    input,
+    input[type="checkbox"] {
+      appearance: auto;
+    }
+
+    input:not([type="checkbox"]),
     select,
     textarea {
       background: rgba(255, 255, 255, 0.05);
