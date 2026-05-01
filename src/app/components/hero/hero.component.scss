@@ -81,6 +81,81 @@
     flex-wrap: wrap;
   }
 
+  &__share {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  &__share-label {
+    font-family: var(--font-heading);
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  &__share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  &__share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 99px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    &--facebook:hover { background: rgba(24, 119, 242, 0.25); border-color: #1877f2; color: #fff; }
+    &--x:hover        { background: rgba(255, 255, 255, 0.15); border-color: #fff; color: #fff; }
+    &--linkedin:hover { background: rgba(10, 102, 194, 0.25); border-color: #0a66c2; color: #fff; }
+    &--whatsapp:hover { background: rgba(37, 211, 102, 0.2); border-color: #25d366; color: #fff; }
+
+    &--native {
+      background: rgba(200, 168, 75, 0.15);
+      border-color: rgba(200, 168, 75, 0.4);
+      color: var(--color-gold);
+
+      &:hover { background: rgba(200, 168, 75, 0.25); border-color: var(--color-gold); }
+    }
+
+    &--copy {
+      &.copied, &:has(svg[viewBox="0 0 24 24"] polyline) {
+        border-color: #4caf50;
+        color: #4caf50;
+      }
+    }
+  }
+
   &__scroll-hint {
     position: absolute;
     bottom: 32px;
