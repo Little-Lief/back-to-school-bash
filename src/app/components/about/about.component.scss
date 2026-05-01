@@ -772,6 +772,10 @@
     .sponsors__category--contender & {
       background: var(--color-gold);
     }
+
+    .sponsors__category--community & {
+      background: var(--color-light-gray);
+    }
   }
 
   &__category-tier {
@@ -784,6 +788,7 @@
     .sponsors__category--heavyweight & { color: var(--color-gold); }
     .sponsors__category--champion &    { color: var(--color-black); }
     .sponsors__category--contender &   { color: var(--color-black); }
+    .sponsors__category--community &   { color: var(--color-charcoal); }
   }
 
   &__names {

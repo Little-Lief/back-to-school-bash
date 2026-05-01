@@ -43,6 +43,7 @@ export class AboutComponent implements OnInit {
     heavyweight: 'Heavyweight',
     champion:    'Champion',
     contender:   'Contender',
+    community:   'Community Sponsor',
   };
 
   get sponsorGroups(): { tier: string; label: string; sponsors: Sponsor[] }[] {

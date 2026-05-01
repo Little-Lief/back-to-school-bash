@@ -135,6 +135,16 @@
             </div>
           }
 
+          <!-- Anonymous option — sponsors only -->
+          @if (selectedRole === 'sponsor') {
+            <div class="register__field register__field--animate register__field--checkbox">
+              <label class="register__checkbox-label">
+                <input type="checkbox" formControlName="anonymous" />
+                Keep my name anonymous on the website
+              </label>
+            </div>
+          }
+
           <!-- Message — always shown, label shifts for "other" -->
           <div class="register__field">
             <label for="message">

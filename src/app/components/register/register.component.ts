@@ -95,6 +95,7 @@ export class RegisterComponent {
       subOption:    [''],
       website:      [''],
       message:      [''],
+      anonymous:    [false],
     });
   }
 
@@ -153,10 +154,14 @@ export class RegisterComponent {
       if (subEntry[v.role]) entryMap[subEntry[v.role]] = subLabel;
     }
 
-    // For sponsors, embed website in the participation field so the sheet can read it
+    // For sponsors, embed website and anonymous flag in the participation field
     if (v.role === 'sponsor' && v.website) {
       entryMap['entry.1832023793'] =
         `${entryMap['entry.1832023793']} | Website: ${v.website}`.trim();
+    }
+    if (v.role === 'sponsor' && v.anonymous) {
+      entryMap['entry.1832023793'] =
+        `${entryMap['entry.1832023793']} | Anonymous`.trim();
     }
 
     // Notes / message — append to a combined field if present

@@ -120,6 +120,27 @@
   }
 
   // ---- Volunteer hint ----
+  &__field--checkbox {
+    margin-bottom: 24px;
+  }
+
+  &__checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.65);
+    cursor: pointer;
+
+    input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--color-gold);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+  }
+
   &__hint {
     display: flex;
     align-items: flex-start;
