@@ -1,0 +1,6 @@
+name = "back-to-school-bash"
+compatibility_date = "2025-01-01"
+
+[assets]
+directory = "./dist/back-to-school-bash/browser"
+not_found_handling = "single-page-application"
