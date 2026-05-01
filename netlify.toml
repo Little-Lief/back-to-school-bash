@@ -6,6 +6,10 @@
   NETLIFY_SKIP_ANGULAR_PLUGIN = "true"
   NETLIFY_USE_EXPERIMENTAL_EDGE_BUNDLER = "false"
 
+[[edge_functions]]
+  path = "/*"
+  function = "social-prerender"
+
 [[redirects]]
   from = "/"
   to = "/index.html"
