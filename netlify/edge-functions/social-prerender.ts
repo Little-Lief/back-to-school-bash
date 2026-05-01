@@ -29,7 +29,12 @@ const OG_HTML = `<!DOCTYPE html>
 </body>
 </html>`;
 
+const STATIC_EXT = /\.(png|jpg|jpeg|gif|svg|ico|webp|woff|woff2|js|css|json|txt|xml|pdf)$/i;
+
 export default async (request: Request, context: Context) => {
+  const url = new URL(request.url);
+  if (STATIC_EXT.test(url.pathname)) return context.next();
+
   const ua = request.headers.get("user-agent") ?? "";
   if (BOT_UA.test(ua)) {
     return new Response(OG_HTML, {
