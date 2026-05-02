@@ -111,39 +111,6 @@
       </div>
     }
 
-    <!-- ── Funding Goal Bar ── -->
-    <div class="needs__funding">
-      <div class="needs__funding-top">
-        <div class="needs__funding-raised">
-          <span class="needs__funding-amount">${{ fmt(fundingPledged) }}</span>
-          <span class="needs__funding-label">pledged</span>
-        </div>
-        <div class="needs__funding-paid">
-          <span class="needs__funding-amount needs__funding-amount--paid">${{ fmt(fundingPaid) }}</span>
-          <span class="needs__funding-label">received</span>
-        </div>
-        <div class="needs__funding-goal">
-          <span class="needs__funding-label">goal</span>
-          <span class="needs__funding-amount needs__funding-amount--goal">${{ fmt(fundingGoal) }}</span>
-        </div>
-      </div>
-
-      <!-- Combined bar -->
-      <div class="needs__bar-track">
-        <div class="needs__bar-fill needs__bar-fill--pledged" [style.width.%]="pledgedPercent"></div>
-        <div class="needs__bar-fill needs__bar-fill--paid"    [style.width.%]="paidPercent"></div>
-      </div>
-
-      <!-- Legend + stats -->
-      <div class="needs__funding-stats">
-        <span class="needs__funding-pct">{{ pledgedPercent }}% of goal pledged</span>
-        <div class="needs__bar-legend">
-          <span class="needs__legend-swatch needs__legend-swatch--pledged"></span><span>Pledged</span>
-          <span class="needs__legend-swatch needs__legend-swatch--paid"></span><span>Received</span>
-        </div>
-        <span class="needs__funding-items">{{ metItems }} of {{ totalItems }} needs filled</span>
-      </div>
-    </div>
 
     <!-- ── Category Cards ── -->
     <div class="needs__grid">
