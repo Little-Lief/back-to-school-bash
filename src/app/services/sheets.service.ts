@@ -29,6 +29,7 @@ const COL_SPONSOR_LEVEL = "sponsorship levels. ability to contribute directly to
 const COL_ENTERTAINMENT = "entertainment options, 30 minutes on the main stage";
 const COL_BUSINESS      = "business name";
 const COL_CONTACT       = "contact person";
+const COL_WEBSITE       = "website links";
 
 @Injectable({ providedIn: 'root' })
 export class SheetsService {
@@ -138,18 +139,21 @@ export class SheetsService {
 
       let tier = '';
       if      (level.includes('1000') || level.includes('heavyweight'))                      tier = 'heavyweight';
-      else if (level.includes('500')  || level.includes('champion'))                         tier = 'champion';
+      else if (level.includes('500')  || level.includes('champion') ||
+               level.includes('powerlifter'))                                                tier = 'champion';
       else if (level.includes('250')  || level.includes('strength builder') ||
                level.includes('contender'))                                                  tier = 'contender';
       else if (level.includes('community') || level.includes('any amount'))                  tier = 'community';
 
       if (tier) {
-        // Try to parse website from "| Website: https://..." embedded in participation field
+        // Prefer the dedicated "website links" column; fall back to embedded parsing, then hardcoded map
+        const websiteDirect = String(row[COL_WEBSITE] ?? '').trim();
         const part = String(row[COL_PARTICIPATION] ?? '');
         const websiteMatch = part.match(/Website:\s*(https?:\/\/\S+)/i);
-        const website = websiteMatch?.[1]
-          ?? SPONSOR_WEBSITES_FALLBACK[name.toLowerCase()]
-          ?? '';
+        const website = websiteDirect
+          || websiteMatch?.[1]
+          || SPONSOR_WEBSITES_FALLBACK[name.toLowerCase()]
+          || '';
 
         // Check if sponsor requested to remain anonymous
         const isAnonymous = /anonymous/i.test(part);
