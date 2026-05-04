@@ -1,0 +1,218 @@
+<div class="dash">
+
+  <!-- ── Header ─────────────────────────────────────────────────── -->
+  <header class="dash__header">
+    <div class="dash__header-left">
+      <h1 class="dash__title">Organizer Dashboard</h1>
+      <p class="dash__subtitle">Back to School Bash 2026 &middot; August 1, 2026 &middot; Jones Gym, WV</p>
+    </div>
+    <div class="dash__header-right">
+      @if (lastUpdated) {
+        <span class="dash__last-updated">
+          Updated {{ lastUpdated | date:'M/d/yy, h:mm a' }}
+        </span>
+      }
+      <button class="dash__refresh-btn" (click)="loadData()" [disabled]="loading">
+        @if (loading) {
+          <span class="dash__spinner"></span> Loading…
+        } @else {
+          &#8635; Refresh
+        }
+      </button>
+    </div>
+  </header>
+
+  @if (error) {
+    <div class="dash__error">
+      Could not reach Google Sheets. Showing last known values.
+    </div>
+  }
+
+  <!-- ── KPI Row ─────────────────────────────────────────────────── -->
+  <section class="dash__kpi-row">
+
+    <div class="dash__kpi-card">
+      <span class="dash__kpi-label">Days Until Event</span>
+      <span class="dash__kpi-number dash__kpi-number--gold">{{ daysUntilEvent }}</span>
+      <span class="dash__kpi-sub">August 1, 2026</span>
+    </div>
+
+    <div class="dash__kpi-card">
+      <span class="dash__kpi-label">Backpacks Confirmed</span>
+      <span class="dash__kpi-number dash__kpi-number--gold">{{ totalBackpacks }}</span>
+      <span class="dash__kpi-sub">of 140 goal</span>
+    </div>
+
+    <div class="dash__kpi-card">
+      <span class="dash__kpi-label">Volunteers Signed Up</span>
+      <span class="dash__kpi-number dash__kpi-number--gold">{{ totalVolunteers }}</span>
+      <span class="dash__kpi-sub">across all roles</span>
+    </div>
+
+    <div class="dash__kpi-card">
+      <span class="dash__kpi-label">Sponsors Confirmed</span>
+      <span class="dash__kpi-number dash__kpi-number--gold">{{ sponsors.length }}</span>
+      <span class="dash__kpi-sub">total sponsors</span>
+    </div>
+
+  </section>
+
+  <!-- ── Two-column: Funding + Supply Readiness ─────────────────── -->
+  <section class="dash__two-col">
+
+    <!-- Funding card -->
+    <div class="dash__card">
+      <h2 class="dash__card-title">Funding</h2>
+      <div class="dash__funding-amounts">
+        <div class="dash__funding-row">
+          <span class="dash__funding-label">Pledged</span>
+          <span class="dash__funding-value dash__funding-value--pledged">
+            {{ fundingPledged | currency:'USD':'symbol':'1.0-0' }}
+          </span>
+        </div>
+        <div class="dash__funding-row">
+          <span class="dash__funding-label">Received</span>
+          <span class="dash__funding-value dash__funding-value--paid">
+            {{ fundingPaid | currency:'USD':'symbol':'1.0-0' }}
+          </span>
+        </div>
+        <div class="dash__funding-row dash__funding-row--goal">
+          <span class="dash__funding-label">Goal</span>
+          <span class="dash__funding-value">$15,000</span>
+        </div>
+      </div>
+
+      <!-- Pledged bar -->
+      <div class="dash__bar-wrap">
+        <div class="dash__bar-label-row">
+          <span>Pledged</span>
+          <span>{{ pledgedPercent }}%</span>
+        </div>
+        <div class="dash__bar-track">
+          <div class="dash__bar-fill dash__bar-fill--pledged" [style.width.%]="pledgedPercent"></div>
+        </div>
+      </div>
+
+      <!-- Paid bar -->
+      <div class="dash__bar-wrap">
+        <div class="dash__bar-label-row">
+          <span>Received</span>
+          <span>{{ paidPercent }}%</span>
+        </div>
+        <div class="dash__bar-track">
+          <div class="dash__bar-fill dash__bar-fill--paid" [style.width.%]="paidPercent"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Supply Readiness card -->
+    <div class="dash__card">
+      <h2 class="dash__card-title">Supply Readiness</h2>
+      <div class="dash__supply-big">
+        <span class="dash__supply-pct">{{ supplyProgress }}%</span>
+        <span class="dash__supply-pct-label">of supply types have donations</span>
+      </div>
+      <div class="dash__supply-details">
+        <div class="dash__supply-row">
+          <span class="dash__supply-row-label">Backpacks on hand</span>
+          <span class="dash__supply-row-value">{{ totalBackpacks }}</span>
+        </div>
+        <div class="dash__supply-row">
+          <span class="dash__supply-row-label">Est. fillable backpacks</span>
+          <span class="dash__supply-row-value">{{ estimatedFillable }}</span>
+        </div>
+        <div class="dash__supply-row">
+          <span class="dash__supply-row-label">Activity stations</span>
+          <span class="dash__supply-row-value">{{ confirmedStations }}</span>
+        </div>
+      </div>
+      <p class="dash__supply-note">Based on current donations — multipliers applied per supply type.</p>
+    </div>
+
+  </section>
+
+  <!-- ── Needs Grid ──────────────────────────────────────────────── -->
+  <section class="dash__needs">
+    <h2 class="dash__section-title">Needs Tracker</h2>
+    <div class="dash__needs-grid">
+
+      @for (cat of needCategories; track cat.id) {
+        <div class="dash__needs-card" [class.dash__needs-card--expanded]="isExpanded(cat)">
+
+          <button
+            class="dash__needs-header"
+            (click)="toggleCategory(cat)"
+            [attr.aria-expanded]="isExpanded(cat)">
+            <span class="dash__needs-icon">{{ cat.icon }}</span>
+            <span class="dash__needs-cat-label">{{ cat.label }}</span>
+            <span class="dash__needs-chevron">{{ isExpanded(cat) ? '▲' : '▼' }}</span>
+          </button>
+
+          <div class="dash__needs-body" [class.dash__needs-body--visible]="isExpanded(cat)">
+            @for (item of cat.items; track item.name) {
+              <div class="dash__needs-item" [class.dash__needs-item--met]="isMet(item)">
+                <div class="dash__needs-item-top">
+                  <span class="dash__needs-item-name">{{ item.name }}</span>
+                  <span class="dash__needs-item-count">
+                    {{ item.have }}{{ item.need > 0 ? ' / ' + item.need : '' }}
+                    <span class="dash__needs-item-unit">{{ item.unit }}</span>
+                  </span>
+                </div>
+                @if (item.need > 0) {
+                  <div class="dash__mini-bar-track">
+                    <div
+                      class="dash__mini-bar-fill"
+                      [class.dash__mini-bar-fill--met]="isMet(item)"
+                      [style.width.%]="pct(item)">
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+
+        </div>
+      }
+
+    </div>
+  </section>
+
+  <!-- ── Sponsor Wall ────────────────────────────────────────────── -->
+  <section class="dash__sponsors">
+    <h2 class="dash__section-title">Sponsor Wall</h2>
+
+    @if (sponsors.length === 0) {
+      <p class="dash__sponsors-empty">No sponsors on file yet.</p>
+    } @else {
+      @for (group of sponsorGroups; track group.tier) {
+        <div class="dash__sponsor-group">
+          <h3 class="dash__sponsor-tier">{{ group.label }}</h3>
+          <div class="dash__sponsor-table">
+            <div class="dash__sponsor-table-head">
+              <span>Name</span>
+              <span>Website</span>
+            </div>
+            @for (s of group.sponsors; track s.name) {
+              <div class="dash__sponsor-row">
+                <span class="dash__sponsor-name">{{ s.name }}</span>
+                <span class="dash__sponsor-site">
+                  @if (s.website) {
+                    <a [href]="s.website" target="_blank" rel="noopener">{{ s.website }}</a>
+                  } @else {
+                    <span class="dash__sponsor-site--none">—</span>
+                  }
+                </span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    }
+  </section>
+
+  <!-- ── Footer note ────────────────────────────────────────────── -->
+  <footer class="dash__footer-note">
+    This page is for organizer use only — not linked from the public site.
+  </footer>
+
+</div>
