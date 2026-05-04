@@ -1,3 +1,28 @@
+@if (locked) {
+  <div class="dash-gate">
+    <div class="dash-gate__card">
+      <div class="dash-gate__icon">🔒</div>
+      <h1 class="dash-gate__title">Organizer Dashboard</h1>
+      <p class="dash-gate__sub">Back to School Bash 2026</p>
+      <form class="dash-gate__form" (ngSubmit)="unlock()">
+        <input
+          class="dash-gate__input"
+          [class.dash-gate__input--error]="passwordError"
+          type="password"
+          placeholder="Enter password"
+          [(ngModel)]="passwordInput"
+          name="password"
+          autofocus />
+        @if (passwordError) {
+          <p class="dash-gate__error">Incorrect password. Try again.</p>
+        }
+        <button class="dash-gate__btn" type="submit">Enter</button>
+      </form>
+    </div>
+  </div>
+}
+
+@if (!locked) {
 <div class="dash">
 
   <!-- ── Header ─────────────────────────────────────────────────── -->
@@ -216,3 +241,4 @@
   </footer>
 
 </div>
+}

@@ -1,17 +1,38 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { DatePipe, DecimalPipe, CurrencyPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { SheetsService, Sponsor, TIER_ORDER } from '../../services/sheets.service';
 import { NeedItem, NeedCategory } from '../../components/about/about.component';
+
+const SESSION_KEY = 'btsb-organizer-auth';
+const PASSWORD    = 'B2s2026';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [DatePipe, DecimalPipe, CurrencyPipe],
+  imports: [DatePipe, DecimalPipe, CurrencyPipe, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
   private sheets = inject(SheetsService);
+
+  // ── Password gate ─────────────────────────────────────────────
+  locked         = true;
+  passwordInput  = '';
+  passwordError  = false;
+
+  unlock(): void {
+    if (this.passwordInput === PASSWORD) {
+      sessionStorage.setItem(SESSION_KEY, '1');
+      this.locked       = false;
+      this.passwordError = false;
+      this.loadData();
+    } else {
+      this.passwordError = true;
+      this.passwordInput = '';
+    }
+  }
 
   // ── Funding ──────────────────────────────────────────────────
   fundingGoal    = 15_000;
@@ -163,7 +184,10 @@ export class DashboardComponent implements OnInit {
 
   // ── Lifecycle ─────────────────────────────────────────────────
   ngOnInit(): void {
-    this.loadData();
+    if (sessionStorage.getItem(SESSION_KEY) === '1') {
+      this.locked = false;
+      this.loadData();
+    }
   }
 
   loadData(): void {
