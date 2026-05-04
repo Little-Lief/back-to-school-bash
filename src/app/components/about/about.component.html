@@ -115,7 +115,7 @@
     <!-- ── Category Cards ── -->
     <div class="needs__grid">
       @for (cat of needCategories; track cat.id) {
-        <div class="needs__card" [class.needs__card--open]="isExpanded(cat)">
+        <div class="needs__card" [class.needs__card--open]="isExpanded(cat)" [attr.data-cat]="cat.id">
           <button class="needs__card-header" (click)="toggleCategory(cat)" [attr.aria-expanded]="isExpanded(cat)">
             <span class="needs__card-icon">{{ cat.icon }}</span>
             <h3 class="needs__card-title">{{ cat.label }}</h3>

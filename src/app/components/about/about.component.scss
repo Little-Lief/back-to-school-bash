@@ -494,6 +494,17 @@
     flex: 1;
   }
 
+  // Two-column layout for the long school supplies card
+  [data-cat="supplies"] &__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 24px;
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
   &__item {
     padding: 12px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
