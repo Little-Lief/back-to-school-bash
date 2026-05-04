@@ -88,6 +88,7 @@ export class AboutComponent implements OnInit {
         { name: 'Composition Notebooks',     detail: 'Wide-ruled preferred',                       have: 0, need: 200, unit: 'notebooks' },
         { name: 'Pencils & Pens',            detail: '',                                            have: 0, need: 50,  unit: 'packs' },
         { name: 'Crayons & Colored Pencils', detail: '24-count boxes or larger',                   have: 0, need: 75,  unit: 'boxes' },
+        { name: 'Highlighters',              detail: '',                                            have: 0, need: 35,  unit: 'packs' },
         { name: 'Glue Sticks',               detail: '',                                            have: 0, need: 100, unit: 'glue sticks' },
         { name: "Kids' Scissors",            detail: 'Safety scissors, ages 5–12',                 have: 0, need: 75,  unit: 'pairs' },
         { name: 'Rulers & Geometry Sets',    detail: 'Middle school supplies',                     have: 0, need: 50,  unit: 'sets' },
@@ -241,37 +242,33 @@ export class AboutComponent implements OnInit {
 
   readonly wishListGroups: WishListGroup[] = [
     {
-      icon: '✏️',
+      icon: '🎒',
       label: 'School Supplies',
       items: [
-        { name: 'Crayola Colored Pencils (36ct)',      have: 5, need: 100 },
-        { name: "Elmer's Disappearing Glue Sticks",    have: 5, need: 100 },
-        { name: 'Oxford Spiral Notebooks (6-pack)',    have: 5, need: 40  },
-        { name: 'Pocket Folders',                      have: 5, need: 40  },
-        { name: 'Crayola Crayons (24ct, 3-pack)',      have: 0, need: 35  },
-        { name: 'Wood-Cased Pencils',                  have: 0, need: 35  },
-        { name: 'Pencil Pouches',                      have: 0, need: 35  },
-        { name: 'BIC Mechanical Pencils (10-pack)',    have: 0, need: 100 },
+        // Backpacks
+        { name: 'Backpacks (Girls, ages 5–8)',         have: 0, need: 30  },
+        { name: 'Backpacks (Boys, ages 5–8)',          have: 0, need: 20  },
+        { name: 'Backpacks (Classic 17″, neutral)',    have: 0, need: 40  },
+        { name: 'Backpacks (Various Styles)',          have: 0, need: 50  },
+        // Supplies
+        { name: 'Composition Notebooks (6-pack)',      have: 5, need: 40  },
+        { name: 'Pencils & Pens (Wood-Cased)',         have: 0, need: 35  },
+        { name: 'Pencils & Pens (Mechanical, 10-pk)',  have: 0, need: 100 },
+        { name: 'Crayons & Colored Pencils (36ct)',    have: 5, need: 100 },
+        { name: 'Crayons & Colored Pencils (3-pack)',  have: 0, need: 35  },
         { name: 'Highlighters (30-pack)',              have: 0, need: 35  },
-        { name: 'Kids Safety Scissors (16-pack)',      have: 0, need: 10  },
-        { name: '3-Ring Binders (1″, 6-pack)',         have: 0, need: 30  },
-        { name: 'Loose Leaf Paper (900 sheets)',       have: 0, need: 10  },
-        { name: 'Filler Paper (150 sheets)',           have: 0, need: 20  },
+        { name: 'Glue Sticks (Elmer\'s)',              have: 5, need: 100 },
+        { name: "Kids' Scissors (Safety, 16-pack)",   have: 0, need: 10  },
+        { name: 'Folders & Binders (Pocket Folders)', have: 5, need: 40  },
+        { name: 'Folders & Binders (3-Ring, 6-pack)', have: 0, need: 30  },
+        { name: 'Pencil Pouches / Cases',              have: 0, need: 35  },
+        { name: 'Loose-Leaf Paper (900 sheets)',       have: 0, need: 10  },
+        { name: 'Loose-Leaf Paper (Filler, 150 ct)',   have: 0, need: 20  },
       ]
     },
     {
-      icon: '🎒',
-      label: 'Backpacks',
-      items: [
-        { name: 'Girls Backpacks — ages 5–8 (mibasies)',  have: 0, need: 30 },
-        { name: 'Boys Backpacks — ages 5–8 (mibasies)',   have: 0, need: 20 },
-        { name: 'Classic 17″ Backpacks (Trailmaker)',     have: 0, need: 40 },
-        { name: 'School Backpacks (rickyh, various)',     have: 0, need: 50 },
-      ]
-    },
-    {
-      icon: '🍎',
-      label: 'Snacks & Food',
+      icon: '🍕',
+      label: 'Food & Drinks',
       items: [
         { name: 'Maruchan Ramen – Chicken Flavor',    have: 0, need: 35 },
         { name: 'Maruchan Ramen – Beef Flavor',       have: 0, need: 35 },
