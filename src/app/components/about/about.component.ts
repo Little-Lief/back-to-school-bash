@@ -2,6 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { SheetsService, Sponsor, TIER_ORDER } from '../../services/sheets.service';
 
+export interface WishListItem  { name: string; have: number; need: number; }
+export interface WishListGroup { icon: string; label: string; items: WishListItem[]; }
+
 export interface NeedItem {
   name: string;
   detail: string;
@@ -231,6 +234,56 @@ export class AboutComponent implements OnInit {
 
   get metItems(): number {
     return this.needCategories.reduce((s, c) => s + this.metFor(c), 0);
+  }
+
+  // ── Amazon Wish List ─────────────────────────────────────────
+  readonly amazonListUrl = 'https://www.amazon.com/registries/gl/guest-view/7Q8UMBYI2KAR';
+
+  readonly wishListGroups: WishListGroup[] = [
+    {
+      icon: '✏️',
+      label: 'School Supplies',
+      items: [
+        { name: 'Crayola Colored Pencils (36ct)',      have: 5, need: 100 },
+        { name: "Elmer's Disappearing Glue Sticks",    have: 5, need: 100 },
+        { name: 'Oxford Spiral Notebooks (6-pack)',    have: 5, need: 40  },
+        { name: 'Pocket Folders',                      have: 5, need: 40  },
+        { name: 'Crayola Crayons (24ct, 3-pack)',      have: 0, need: 35  },
+        { name: 'Wood-Cased Pencils',                  have: 0, need: 35  },
+        { name: 'Pencil Pouches',                      have: 0, need: 35  },
+        { name: 'BIC Mechanical Pencils (10-pack)',    have: 0, need: 100 },
+        { name: 'Highlighters (30-pack)',              have: 0, need: 35  },
+        { name: 'Kids Safety Scissors (16-pack)',      have: 0, need: 10  },
+        { name: '3-Ring Binders (1″, 6-pack)',         have: 0, need: 30  },
+        { name: 'Loose Leaf Paper (900 sheets)',       have: 0, need: 10  },
+        { name: 'Filler Paper (150 sheets)',           have: 0, need: 20  },
+      ]
+    },
+    {
+      icon: '🎒',
+      label: 'Backpacks',
+      items: [
+        { name: 'Girls Backpacks — ages 5–8 (mibasies)',  have: 0, need: 30 },
+        { name: 'Boys Backpacks — ages 5–8 (mibasies)',   have: 0, need: 20 },
+        { name: 'Classic 17″ Backpacks (Trailmaker)',     have: 0, need: 40 },
+        { name: 'School Backpacks (rickyh, various)',     have: 0, need: 50 },
+      ]
+    },
+    {
+      icon: '🍎',
+      label: 'Snacks & Food',
+      items: [
+        { name: 'Maruchan Ramen – Chicken Flavor',    have: 0, need: 35 },
+        { name: 'Maruchan Ramen – Beef Flavor',       have: 0, need: 35 },
+        { name: "Kellogg's Breakfast Cereal Variety", have: 0, need: 20 },
+        { name: 'Lance Sandwich Crackers',            have: 0, need: 35 },
+        { name: 'GoGo squeeZ Apple Pouches',          have: 0, need: 35 },
+      ]
+    },
+  ];
+
+  wishPct(item: WishListItem): number {
+    return Math.min(100, Math.round((item.have / item.need) * 100));
   }
 
   // ── Navigation ───────────────────────────────────────────────
