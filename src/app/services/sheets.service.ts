@@ -65,12 +65,34 @@ export class SheetsService {
     const rows = (raw['form responses 1'] ?? []) as Record<string, unknown>[];
 
     const { pledged, paid } = this.extractFunding(raw, rows);
+
+    // Supply counts from the dedicated "supplies" tab take precedence over
+    // form-response-derived counts (the tab is updated by the Gmail monitor script)
+    const supplyItems  = this.extractSupplyTab(raw);
+    const formItems    = this.extractItems(rows);
+    // supplyItems first so applyItems() picks them up over form-derived counts
+    const items        = [...supplyItems, ...formItems];
+
     return {
       fundingPledged: pledged,
       fundingPaid:    paid,
-      items:          this.extractItems(rows),
+      items,
       sponsors:       this.extractSponsors(rows),
     };
+  }
+
+  // ── Supplies tab (written by Gmail monitor Apps Script) ───────────────────
+  private extractSupplyTab(raw: Record<string, unknown[]>): SheetRow[] {
+    const tab = (raw['supplies'] ?? raw['Supplies'] ?? []) as Record<string, unknown>[];
+    if (tab.length === 0) return [];
+
+    return tab
+      .filter(row => row['name'] && row['have'] !== undefined && row['have'] !== '')
+      .map(row => ({
+        category: 'supplies',
+        name:     String(row['name']).trim(),
+        have:     Number(row['have']) || 0,
+      }));
   }
 
   // Returns a lowercased string for a column value
