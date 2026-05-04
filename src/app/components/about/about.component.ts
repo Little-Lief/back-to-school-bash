@@ -2,9 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { SheetsService, Sponsor, TIER_ORDER } from '../../services/sheets.service';
 
-export interface WishListItem  { name: string; have: number; need: number; }
-export interface WishListGroup { icon: string; label: string; items: WishListItem[]; }
-
 export interface NeedItem {
   name: string;
   detail: string;
@@ -84,19 +81,39 @@ export class AboutComponent implements OnInit {
       label: 'School Supplies',
       icon: '🎒',
       items: [
-        { name: 'Backpacks',                 detail: 'All sizes — elementary through high school', have: 0, need: 150, unit: 'backpacks' },
-        { name: 'Composition Notebooks',     detail: 'Wide-ruled preferred',                       have: 0, need: 200, unit: 'notebooks' },
-        { name: 'Pencils & Pens',            detail: '',                                            have: 0, need: 50,  unit: 'packs' },
-        { name: 'Crayons & Colored Pencils', detail: '24-count boxes or larger',                   have: 0, need: 75,  unit: 'boxes' },
-        { name: 'Highlighters',              detail: '',                                            have: 0, need: 35,  unit: 'packs' },
-        { name: 'Glue Sticks',               detail: '',                                            have: 0, need: 100, unit: 'glue sticks' },
-        { name: "Kids' Scissors",            detail: 'Safety scissors, ages 5–12',                 have: 0, need: 75,  unit: 'pairs' },
-        { name: 'Rulers & Geometry Sets',    detail: 'Middle school supplies',                     have: 0, need: 50,  unit: 'sets' },
-        { name: 'Folders & Binders',         detail: 'Plastic pocket folders, 1″ binders',         have: 0, need: 100, unit: 'folders' },
-        { name: 'Pencil Pouches / Cases',    detail: '',                                            have: 0, need: 75,  unit: 'pouches' },
-        { name: 'Erasers',                   detail: '',                                            have: 0, need: 150, unit: 'packs' },
-        { name: 'Loose-Leaf Paper',          detail: 'College- and wide-ruled',                    have: 0, need: 50,  unit: 'reams' },
-        { name: 'Gift Cards',                detail: 'Walmart, Target, or school supply stores',   have: 0, need: 25,  unit: 'gift cards' },
+        // Backpacks — from Amazon wish list
+        { name: 'Backpacks — Girls (ages 5–8)',        detail: 'mibasies, various colors',                   have: 0, need: 30,  unit: 'backpacks' },
+        { name: 'Backpacks — Boys (ages 5–8)',         detail: 'mibasies, various colors',                   have: 0, need: 20,  unit: 'backpacks' },
+        { name: 'Backpacks — Classic 17″',             detail: 'Trailmaker, neutral colors',                 have: 0, need: 40,  unit: 'backpacks' },
+        { name: 'Backpacks — Various Styles',          detail: 'rickyh style, all ages',                     have: 0, need: 50,  unit: 'backpacks' },
+        // Notebooks
+        { name: 'Composition Notebooks',               detail: 'Oxford Spiral, 6-pack',                      have: 5, need: 40,  unit: 'packs'     },
+        // Pencils — from Amazon wish list
+        { name: 'Pencils & Pens (Wood-Cased)',         detail: 'Amazon Basics',                              have: 0, need: 35,  unit: 'packs'     },
+        { name: 'Pencils & Pens (Mechanical)',         detail: 'BIC Xtra-Smooth, 10-pack',                   have: 0, need: 100, unit: 'packs'     },
+        // Crayons — from Amazon wish list
+        { name: 'Crayons & Colored Pencils (36ct)',    detail: 'Crayola',                                    have: 5, need: 100, unit: 'boxes'     },
+        { name: 'Crayons & Colored Pencils (Crayons)', detail: 'Crayola 24ct, 3-pack',                       have: 0, need: 35,  unit: 'packs'     },
+        // Highlighters — from Amazon wish list
+        { name: 'Highlighters',                        detail: 'V-Opitos 30-pack',                           have: 0, need: 35,  unit: 'packs'     },
+        // Glue sticks — from Amazon wish list
+        { name: 'Glue Sticks',                         detail: "Elmer's Disappearing Purple, 3-pack",        have: 5, need: 100, unit: 'sticks'    },
+        // Scissors — from Amazon wish list
+        { name: "Kids' Scissors",                      detail: 'BURVAGY Safety Scissors, 16-pack',           have: 0, need: 10,  unit: 'sets'      },
+        // Rulers — not on Amazon list, keep for sheet tracking
+        { name: 'Rulers & Geometry Sets',              detail: 'Middle school supplies',                     have: 0, need: 50,  unit: 'sets'      },
+        // Folders & Binders — from Amazon wish list
+        { name: 'Folders & Binders (Pocket Folders)',  detail: 'Amazon Basics Heavy Duty',                   have: 5, need: 40,  unit: 'folders'   },
+        { name: 'Folders & Binders (3-Ring Binders)',  detail: 'SUNEE 1-inch, 6-pack',                       have: 0, need: 30,  unit: 'binders'   },
+        // Pencil pouches — from Amazon wish list
+        { name: 'Pencil Pouches / Cases',              detail: 'YEGEER for 3-ring binder',                   have: 0, need: 35,  unit: 'pouches'   },
+        // Erasers — not on Amazon list, keep for sheet tracking
+        { name: 'Erasers',                             detail: '',                                            have: 0, need: 150, unit: 'packs'     },
+        // Paper — from Amazon wish list
+        { name: 'Loose-Leaf Paper (College Ruled)',    detail: 'Rosmonde, 6×150 sheets',                     have: 0, need: 10,  unit: 'packs'     },
+        { name: 'Loose-Leaf Paper (Filler)',           detail: 'Top Flight, 150 sheets',                     have: 0, need: 20,  unit: 'packs'     },
+        // Gift cards — not on Amazon list, keep for sheet tracking
+        { name: 'Gift Cards',                          detail: 'Walmart, Target, or school supply stores',   have: 0, need: 25,  unit: 'gift cards'},
       ]
     },
     {
@@ -239,49 +256,6 @@ export class AboutComponent implements OnInit {
 
   // ── Amazon Wish List ─────────────────────────────────────────
   readonly amazonListUrl = 'https://www.amazon.com/registries/gl/guest-view/7Q8UMBYI2KAR';
-
-  readonly wishListGroups: WishListGroup[] = [
-    {
-      icon: '🎒',
-      label: 'School Supplies',
-      items: [
-        // Backpacks
-        { name: 'Backpacks (Girls, ages 5–8)',         have: 0, need: 30  },
-        { name: 'Backpacks (Boys, ages 5–8)',          have: 0, need: 20  },
-        { name: 'Backpacks (Classic 17″, neutral)',    have: 0, need: 40  },
-        { name: 'Backpacks (Various Styles)',          have: 0, need: 50  },
-        // Supplies
-        { name: 'Composition Notebooks (6-pack)',      have: 5, need: 40  },
-        { name: 'Pencils & Pens (Wood-Cased)',         have: 0, need: 35  },
-        { name: 'Pencils & Pens (Mechanical, 10-pk)',  have: 0, need: 100 },
-        { name: 'Crayons & Colored Pencils (36ct)',    have: 5, need: 100 },
-        { name: 'Crayons & Colored Pencils (3-pack)',  have: 0, need: 35  },
-        { name: 'Highlighters (30-pack)',              have: 0, need: 35  },
-        { name: 'Glue Sticks (Elmer\'s)',              have: 5, need: 100 },
-        { name: "Kids' Scissors (Safety, 16-pack)",   have: 0, need: 10  },
-        { name: 'Folders & Binders (Pocket Folders)', have: 5, need: 40  },
-        { name: 'Folders & Binders (3-Ring, 6-pack)', have: 0, need: 30  },
-        { name: 'Pencil Pouches / Cases',              have: 0, need: 35  },
-        { name: 'Loose-Leaf Paper (900 sheets)',       have: 0, need: 10  },
-        { name: 'Loose-Leaf Paper (Filler, 150 ct)',   have: 0, need: 20  },
-      ]
-    },
-    {
-      icon: '🍕',
-      label: 'Food & Drinks',
-      items: [
-        { name: 'Maruchan Ramen – Chicken Flavor',    have: 0, need: 35 },
-        { name: 'Maruchan Ramen – Beef Flavor',       have: 0, need: 35 },
-        { name: "Kellogg's Breakfast Cereal Variety", have: 0, need: 20 },
-        { name: 'Lance Sandwich Crackers',            have: 0, need: 35 },
-        { name: 'GoGo squeeZ Apple Pouches',          have: 0, need: 35 },
-      ]
-    },
-  ];
-
-  wishPct(item: WishListItem): number {
-    return Math.min(100, Math.round((item.have / item.need) * 100));
-  }
 
   // ── Navigation ───────────────────────────────────────────────
   scrollTo(id: string) {

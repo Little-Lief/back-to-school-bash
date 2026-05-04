@@ -170,64 +170,12 @@
     <!-- ── CTA ── -->
     <div class="needs__footer">
       <p>Every contribution — big or small — makes a real difference for our kids.</p>
-      <button class="btn btn--primary" (click)="scrollTo('register')">Sponsor or Volunteer</button>
-    </div>
-  </div>
-</section>
-
-<!-- AMAZON WISH LIST SECTION -->
-<section class="wishlist" id="wishlist">
-  <div class="container">
-    <p class="section-label">Shop Directly</p>
-    <h2 class="section-title">Amazon Wish List</h2>
-    <div class="divider"></div>
-    <p class="wishlist__sub">
-      Purchase supplies directly from our Amazon wish list — everything ships straight to the event organizer.
-      Every item you buy comes off the list automatically.
-    </p>
-
-    <div class="wishlist__cta-row">
-      <a class="btn btn--primary" [href]="amazonListUrl" target="_blank" rel="noopener noreferrer">
-        Shop the Amazon Wish List ↗
-      </a>
-    </div>
-
-    <div class="wishlist__groups">
-      @for (group of wishListGroups; track group.label) {
-        <div class="wishlist__group">
-          <div class="wishlist__group-header">
-            <span class="wishlist__group-icon">{{ group.icon }}</span>
-            <h3 class="wishlist__group-title">{{ group.label }}</h3>
-          </div>
-          <ul class="wishlist__list">
-            @for (item of group.items; track item.name) {
-              <li class="wishlist__item" [class.wishlist__item--met]="item.have >= item.need">
-                <div class="wishlist__item-row">
-                  <span class="wishlist__name">{{ item.name }}</span>
-                  <span class="wishlist__fraction"
-                        [class.wishlist__fraction--partial]="item.have > 0 && item.have < item.need"
-                        [class.wishlist__fraction--met]="item.have >= item.need">
-                    <strong>{{ item.have }}</strong><span class="wishlist__frac-sep">/</span>{{ item.need }}
-                  </span>
-                </div>
-                <div class="wishlist__mini-track">
-                  <div class="wishlist__mini-fill"
-                       [style.width.%]="wishPct(item)"
-                       [class.wishlist__mini-fill--met]="item.have >= item.need">
-                  </div>
-                </div>
-              </li>
-            }
-          </ul>
-        </div>
-      }
-    </div>
-
-    <div class="wishlist__footer">
-      <p>Items purchased through the list ship directly to the organizer — no drop-off needed.</p>
-      <a class="btn btn--outline" [href]="amazonListUrl" target="_blank" rel="noopener noreferrer">
-        View Full List on Amazon ↗
-      </a>
+      <div class="needs__footer-actions">
+        <button class="btn btn--primary" (click)="scrollTo('register')">Sponsor or Volunteer</button>
+        <a class="btn btn--outline" [href]="amazonListUrl" target="_blank" rel="noopener noreferrer">
+          Shop School Supplies on Amazon ↗
+        </a>
+      </div>
     </div>
   </div>
 </section>
